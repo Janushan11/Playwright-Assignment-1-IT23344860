@@ -4,12 +4,10 @@
 const BASE_URL = 'https://tamil.changathi.com/';
 
 async function getEditorLocator(page) {
-  const textbox = page.getByRole('textbox').first();
-  const editable = page.locator('[contenteditable="true"]').first();
-  const textarea = page.locator('textarea').first();
-  const combined = textbox.or(editable).or(textarea);
-  await combined.waitFor({ state: 'visible', timeout: 10000 });
-  return combined.first();
+  // tamil.changathi.com main editor is #transliterateTextarea; the page also has a contenteditable popup, so target the textarea explicitly
+  const mainEditor = page.locator('#transliterateTextarea');
+  await mainEditor.waitFor({ state: 'visible', timeout: 10000 });
+  return mainEditor;
 }
 
 async function typeThanglishAndConvert(page, text) {
@@ -24,11 +22,16 @@ async function typeThanglishAndConvert(page, text) {
     await editor.press('Space');
     await page.waitForTimeout(200);
   }
+  // Wait for conversion to complete (site converts on space; output may lag)
+  await page.waitForTimeout(800);
   return editor;
 }
 
 async function getOutputText(page) {
   const editor = await getEditorLocator(page);
+  // contenteditable divs: inputValue() is empty; use innerText/textContent via evaluate
+  const fromEl = await editor.evaluate((el) => (el.innerText || el.textContent || '').trim());
+  if (fromEl) return fromEl;
   return (await editor.inputValue()) || (await editor.textContent()) || '';
 }
 
