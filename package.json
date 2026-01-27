@@ -1,0 +1,16 @@
+{
+  "name": "playwright-assignment-1-it23344860",
+  "version": "1.0.0",
+  "description": "Playwright tests for Thanglish-to-Tamil conversion at tamil.changathi.com",
+  "scripts": {
+    "test": "playwright test",
+    "test:positive": "playwright test assignment-1/positive-functional",
+    "test:negative": "playwright test assignment-1/negative-functional",
+    "test:ui": "playwright test assignment-1/ui-testcases",
+    "test:headed": "playwright test --headed",
+    "test:debug-pos1": "playwright test assignment-1/positive-functional/Pos_Fun_0001.spec.js --project=chromium --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
