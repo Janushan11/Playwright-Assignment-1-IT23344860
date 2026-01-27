@@ -1,12 +1,12 @@
-// Pos_Fun_0012: convert sentence with place name – S – naan jaffna poren
-// Expected: Place name converted correctly, Tamil correct. Covers: Names/Places.
+// Pos_Fun_009: convert imperative command – S – inga vaa
+// Expected: Command intent preserved, Tamil correct. Covers: Command form.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
-test('Pos_Fun_0012 – convert sentence with place name', async ({ page }) => {
+test('Pos_Fun_009 – convert imperative command', async ({ page }) => {
   await page.goto(BASE_URL);
-  await typeThanglishAndConvert(page, 'naan jaffna poren');
+  await typeThanglishAndConvert(page, 'inga vaa');
   const output = await getOutputText(page);
   expect(output.trim()).toBeTruthy();
   expect(output).toMatch(/[\u0B80-\u0BFF]/);
