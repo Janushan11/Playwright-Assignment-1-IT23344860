@@ -1,13 +1,19 @@
 // Pos_Fun_020: Convert sentence with multi-line input – M – naan varen / veetuku poren
-// Expected: Line breaks preserved, Tamil correct. Covers: Compound sentence, multi-line.
+// Expected: நான் வரேன் வீட்டுக்கு போறேன். Covers: Compound sentence, multi-line.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
+const INPUT_THANGLISH = 'naan varen\nveetuku poren';
+const EXPECTED_TAMIL = 'நான் வரேன் வீட்டுக்கு போறேன்';
+
 test('Pos_Fun_020 – Convert sentence with multi-line input', async ({ page }) => {
   await page.goto(BASE_URL);
-  await typeThanglishAndConvert(page, 'naan varen\nveetuku poren');
+  await typeThanglishAndConvert(page, INPUT_THANGLISH);
   const output = await getOutputText(page);
   expect(output.trim()).toBeTruthy();
   expect(output).toMatch(/[\u0B80-\u0BFF]/);
+  const normalized = output.replace(/\s+/g, ' ').trim();
+  const expectedNormalized = EXPECTED_TAMIL.replace(/\s+/g, ' ').trim();
+  expect(normalized).toBe(expectedNormalized);
 });

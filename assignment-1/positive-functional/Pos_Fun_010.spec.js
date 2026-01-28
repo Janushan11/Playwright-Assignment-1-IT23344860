@@ -1,13 +1,17 @@
 // Pos_Fun_010: convert pronoun variation sentence – S – avanga nalaiku varanga
-// Expected: Pronoun handled correctly, Tamil correct. Covers: Pronoun variation.
+// Expected: அவங்க நாளைக்கு வராங்க. Covers: Pronoun variation.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
+const INPUT_THANGLISH = 'avanga nalaiku varanga';
+const EXPECTED_TAMIL = 'அவங்க நாளைக்கு வராங்க';
+
 test('Pos_Fun_010 – convert pronoun variation sentence', async ({ page }) => {
   await page.goto(BASE_URL);
-  await typeThanglishAndConvert(page, 'avanga nalaiku varanga');
+  await typeThanglishAndConvert(page, INPUT_THANGLISH);
   const output = await getOutputText(page);
   expect(output.trim()).toBeTruthy();
   expect(output).toMatch(/[\u0B80-\u0BFF]/);
+  expect(output.trim()).toBe(EXPECTED_TAMIL);
 });

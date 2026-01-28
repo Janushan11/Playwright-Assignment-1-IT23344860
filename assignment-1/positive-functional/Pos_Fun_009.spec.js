@@ -1,13 +1,17 @@
 // Pos_Fun_009: convert imperative command – S – inga vaa
-// Expected: Command intent preserved, Tamil correct. Covers: Command form.
+// Expected: இங்க வா. Covers: Command form.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
+const INPUT_THANGLISH = 'inga vaa';
+const EXPECTED_TAMIL = 'இங்க வா';
+
 test('Pos_Fun_009 – convert imperative command', async ({ page }) => {
   await page.goto(BASE_URL);
-  await typeThanglishAndConvert(page, 'inga vaa');
+  await typeThanglishAndConvert(page, INPUT_THANGLISH);
   const output = await getOutputText(page);
   expect(output.trim()).toBeTruthy();
   expect(output).toMatch(/[\u0B80-\u0BFF]/);
+  expect(output.trim()).toBe(EXPECTED_TAMIL);
 });
