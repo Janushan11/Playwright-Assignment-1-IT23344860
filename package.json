@@ -9,7 +9,11 @@
     "test:ui": "playwright test assignment-1/ui-testcases",
     "test:headed": "playwright test --headed",
     "test:pos1": "playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js",
-    "test:debug-pos1": "playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --debug"
+    "test:pos1-headed": "playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --headed",
+    "test:pos1-debug": "set DEBUG_POS1=1&& playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --headed",
+    "test:debug": "set USE_CHROME_FOR_DEBUG=1&& playwright test --debug",
+    "test:debug-pos1": "set USE_CHROME_FOR_DEBUG=1&& playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --debug",
+    "test:open-ui": "playwright test --ui"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0"

@@ -16,6 +16,26 @@ module.exports = defineConfig({
     navigationTimeout: 30000,
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        // Use installed Chrome for --debug (avoids "browser has been closed" on Windows)
+        ...(process.env.PWDEBUG || process.env.USE_CHROME_FOR_DEBUG
+          ? { channel: 'chrome' }
+          : {}),
+        launchOptions: {
+          args: [
+            '--disable-gpu',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-software-rasterizer',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding',
+          ],
+        },
+      },
+    },
   ],
 });
