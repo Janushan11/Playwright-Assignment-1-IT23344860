@@ -17,9 +17,6 @@ test('Pos_Fun_006 – convert compound statement', async ({ page }) => {
   const output = await getOutputText(page);
   expect(output.trim()).toBeTruthy();
   expect(output).toMatch(/[\u0B80-\u0BFF]/);
-
-  // Site may return the compound sentence either as 2 lines or 1 line.
-  // Normalize all whitespace so we validate the words/content, not formatting.
   const normalized = output.replace(/\s+/g, ' ').trim();
   const expectedNormalized = EXPECTED_TAMIL.replace(/\s+/g, ' ').trim();
   expect(normalized).toBe(expectedNormalized);

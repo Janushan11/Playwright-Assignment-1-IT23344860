@@ -1,5 +1,5 @@
 // Neg_Fun_001: Empty input – S – (Empty input field)
-// Expected: No Tamil conversion with validation message. Covers: Empty input, error handling.
+// Expected: No output generated. Covers: Empty input, error handling.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, getEditorLocator, getOutputText } = require('../fixtures');

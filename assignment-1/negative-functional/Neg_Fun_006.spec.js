@@ -1,5 +1,5 @@
 // Neg_Fun_006: Only special characters input – S – @@##
-// Expected: No Tamil conversion with validation message. Covers: Typographical error, error handling.
+// Expected: No tamil conversion with validation message / Remain unchanged. Covers: Special characters, error handling.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, getEditorLocator, getOutputText } = require('../fixtures');

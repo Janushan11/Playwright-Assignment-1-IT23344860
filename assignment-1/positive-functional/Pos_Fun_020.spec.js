@@ -1,11 +1,11 @@
-// Pos_Fun_020: Convert sentence with multi-line input – M – naan varen / veetuku poren
-// Expected: நான் வரேன் வீட்டுக்கு போறேன். Covers: Compound sentence, multi-line.
+// Pos_Fun_020: Convert sentence with multi-line input – M – naan vaaran / veetuku poren
+// Expected: நான் வாறன் வீட்டுக்கு போறேன். Covers: Multi-line input.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
-const INPUT_THANGLISH = 'naan varen\nveetuku poren';
-const EXPECTED_TAMIL = 'நான் வரேன் வீட்டுக்கு போறேன்';
+const INPUT_THANGLISH = 'naan vaaran\nveetuku poren';
+const EXPECTED_TAMIL = 'நான் வாறன் வீட்டுக்கு போறேன்';
 
 test('Pos_Fun_020 – Convert sentence with multi-line input', async ({ page }) => {
   await page.goto(BASE_URL);

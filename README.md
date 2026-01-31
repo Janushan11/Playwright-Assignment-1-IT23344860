@@ -8,158 +8,250 @@ No backend API, performance, or security testing.
 
 See [repository.txt](repository.txt) for the Git repository link.
 
+---
+
 ## Prerequisites
 
-- **Node.js** 18+  
-- **npm** or **yarn**
+- **Node.js** 18 or newer  
+- **npm** (comes with Node.js) or **yarn**
 
-## Install Node.js and npm (here)
+---
 
-If `npm` or `node` is not recognized:
+## How to install
 
-1. **Install Node.js** (includes npm): [https://nodejs.org](https://nodejs.org)  
-   - Download the **LTS** Windows installer, run it, and follow the steps.  
-   - **Important:** Close PowerShell/CMD and Cursor completely, then reopen them (or restart the PC). PATH updates only apply to **new** terminals.
+### 1. Install Node.js and npm
 
-2. **In this project folder**, install dependencies:
+If `node` or `npm` is not recognized in the terminal:
 
-   ```bash
-   cd "c:\Users\NEXA\Documents\GitHub\Playwright-Assignment-1-IT23344860"
-   npm install
+1. Download **Node.js LTS** from [https://nodejs.org](https://nodejs.org) and run the installer.
+2. **Close all terminals and Cursor**, then open a **new** terminal (PATH updates only apply to new sessions).
+3. Check:
+   ```powershell
+   node --version
+   npm --version
    ```
+   You should see version numbers. If not, restart the PC and try again.
 
-3. **Install Playwright browsers** (first time):
+### 2. Install project dependencies
 
-   ```bash
-   npx playwright install chromium
-   ```
-
-## Install dependencies
+From the **project folder**:
 
 ```bash
+cd "c:\Users\HP\Documents\GitHub\Playwright-Assignment-1-IT23344860"
 npm install
 ```
 
-Install Playwright browsers (first-time or after bumping @playwright/test):
+### 3. Install Playwright browsers
+
+Install **Chromium** (default) and **Firefox** so you can run tests in both:
 
 ```bash
 npx playwright install chromium
+npx playwright install firefox
 ```
 
-## Run tests
+To install all supported browsers (Chromium, Firefox, WebKit):
 
-- **All tests**
-  ```bash
-  npm test
-  ```
+```bash
+npx playwright install
+```
 
-- **Positive functional only** (24 tests)
-  ```bash
-  npm run test:positive
-  ```
+---
 
-- **Negative functional only** (10 tests)
-  ```bash
-  npm run test:negative
-  ```
+## How to run
 
-- **UI tests only** (1 test)
-  ```bash
-  npm run test:ui
-  ```
+**Always run commands from the project folder** (the folder that contains `package.json`).
 
-- **Headed (visible browser)**
-  ```bash
-  npm run test:headed
-  ```
+### Run all tests (Chromium + Firefox + Edge)
 
-## Layout
+```bash
+npm test
+```
+
+Runs 35 tests on **Chromium**, **Firefox**, and **Microsoft Edge** (105 runs total). Takes longer.
+
+### Run on one browser only
+
+| Command | Description |
+|--------|-------------|
+| `npm run test:chromium` | All tests, **Chromium** only (35 tests) |
+| `npm run test:firefox` | All tests, **Firefox** only (35 tests) |
+| `npm run test:edge` | All tests, **Microsoft Edge** only (35 tests) |
+| `npm run test:chromium:headed` | Chromium, **visible** browser window |
+| `npm run test:firefox:headed` | Firefox, **visible** browser window |
+| `npm run test:edge:headed` | Microsoft Edge, **visible** browser window |
+
+### Run by test suite
+
+| Command | Description |
+|--------|-------------|
+| `npm run test:positive` | Positive functional only (24 tests) |
+| `npm run test:negative` | Negative functional only (10 tests) |
+| `npm run test:ui` | UI tests only (1 test) |
+
+With a specific browser:
+
+- `npm run test:positive:firefox` — positive tests on Firefox  
+- `npm run test:negative:firefox` — negative tests on Firefox  
+- `npm run test:ui:firefox` — UI test on Firefox  
+- `npm run test:positive:edge` — positive tests on Microsoft Edge  
+- `npm run test:negative:edge` — negative tests on Microsoft Edge  
+- `npm run test:ui:edge` — UI test on Microsoft Edge  
+
+### Run headed (visible browser)
+
+```bash
+npm run test:headed
+```
+
+Runs all tests with a visible browser (Chromium, Firefox, and Edge). To see only one browser:
+
+```bash
+npm run test:chromium:headed
+npm run test:firefox:headed
+npm run test:edge:headed
+```
+
+### Run a single test
+
+```bash
+npm run test:pos1
+```
+
+Runs `Pos_Fun_001` only. Other single-test scripts: `test:pos2`, `test:pos3`, … `test:pos24` (see `package.json`).
+
+### Alternative: npx (without npm scripts)
+
+```bash
+npx playwright test
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=edge
+npx playwright test --project=edge --headed
+npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js
+```
+
+Main test scripts use `NODE_OPTIONS=--no-warnings` so you avoid the Node “NO_COLOR / FORCE_COLOR” warning in Cursor or other IDEs.
+
+---
+
+## Project layout
 
 ```
 assignment-1/
 ├── fixtures.js              # Shared helpers (editor, type, output)
-├── positive-functional/     # 24 specs – Pos_Fun_001.spec.js … Pos_Fun_024.spec.js
-├── negative-functional/     # 10 specs – Neg_Fun_001.spec.js … Neg_Fun_010.spec.js
-└── ui-testcases/           # 1 spec  – Pos_UI_001.spec.js
+├── positive-functional/     # 24 specs – Pos_Fun_001 … Pos_Fun_024
+├── negative-functional/     # 10 specs – Neg_Fun_001 … Neg_Fun_010
+└── ui-testcases/            # 1 spec  – Pos_UI_001
 ```
 
-- **Positive functional**: valid Thanglish inputs; expect Tamil output.  
-- **Negative functional**: empty, invalid, or edge inputs; expect no/partial conversion or validation.  
+- **Positive functional**: valid Thanglish input → expected Tamil output.  
+- **Negative functional**: empty/invalid input → no or partial conversion.  
 - **UI**: output clears when input is cleared.
 
-Tests assume the site’s main editor is a `textbox`, `textarea`, or `[contenteditable="true"]`. If the UI changes, update selectors in `assignment-1/fixtures.js`.
+Tests target the main editor (`#transliterateTextarea`). If the site UI changes, update `assignment-1/fixtures.js`.
 
-## Why tests might fail (troubleshooting)
+---
 
-If **all** positive/UI tests fail, common causes:
+## If you get errors (troubleshooting)
 
-1. **Editor not found (timeout)**  
-   The site may use a different structure (e.g. iframe, different selector).  
-   - Run one test in headed mode to see what loads:  
-     `npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --headed`  
-   - If the editor is in an iframe, add logic in `assignment-1/fixtures.js` to switch to that frame before locating the editor.
+### “npx” or “node” is not recognized
 
-2. **Output is empty or still in Thanglish**  
-   - Conversion can lag; `fixtures.js` already waits 800 ms after typing.  
-   - The site uses a single contenteditable field; `getOutputText` reads via `innerText`/`textContent`. If the site ever splits input/output into two elements, update `getOutputText` to read from the output element.
+- **Cause:** Node.js is not installed or not on PATH.  
+- **Fix:** Install Node.js LTS from [nodejs.org](https://nodejs.org), **close all terminals and Cursor**, open a new terminal, then run `node --version` and `npm install` again from the project folder.
 
-3. **Network / load**  
-   - Ensure [https://tamil.changathi.com/](https://tamil.changathi.com/) loads in a normal browser.  
-   - In slow networks, increase `navigationTimeout` or `actionTimeout` in `playwright.config.js`.
+### “Browser not found” / “Executable doesn’t exist”
 
-4. **See the real error**  
-   Run a single test and read the message:  
-   `npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js`  
-   Check for “Timeout”, “expect(received).toBeTruthy()”, or “locator resolved to …” to know if it’s timing, assertion, or selector-related.
+- **Cause:** Playwright browsers are not installed.  
+- **Fix:** From the project folder run:
+  ```bash
+  npx playwright install chromium
+  npx playwright install firefox
+  ```
 
-## “npx is not recognized” (PowerShell / CMD)
+### Editor not found (timeout)
 
-That means **Node.js is not installed** or not on your PATH.
+- **Cause:** Site structure or selector changed (e.g. editor inside iframe).  
+- **Fix:** Run one test with a visible browser to see what loads:
+  ```bash
+  npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --headed --project=chromium
+  ```
+  If the editor is in an iframe, update `assignment-1/fixtures.js` to switch to that frame before using the editor.
 
-1. **Install Node.js**  
-   - Go to [https://nodejs.org](https://nodejs.org) and download the **LTS** Windows installer.  
-   - Run it and complete the setup (default options are fine).  
-   - **Close every terminal and Cursor**, then open a **new** PowerShell or CMD and go to the project folder. PATH is updated only for new sessions.
+### Output empty or still in Thanglish
 
-2. **Check it works**  
-   In the **new** terminal run:
-   ```powershell
-   node --version
-   npx --version
-   ```
-   You should see version numbers. If you still get “not recognized”, restart the PC after installing Node.
+- **Cause:** Conversion delay or site changed (e.g. separate output element).  
+- **Fix:** `fixtures.js` already waits 800 ms after typing. If the site now has a separate output element, change `getOutputText` in `fixtures.js` to read from that element.
 
-3. **Run the test**  
-   From the project folder:
-   ```powershell
-   cd "C:\Users\NEXA\Documents\GitHub\Playwright-Assignment-1-IT23344860"
-   npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js
-   ```
-   Or use the npm script:
-   ```powershell
-   npm run test:pos1
-   ```
-   (Use `npm run test:debug-pos1` to run Pos_Fun_001 in debug mode with the Playwright inspector.)
+### Network / site not loading
 
-## “EPERM: operation not permitted, scandir … WinSAT”
+- **Cause:** [https://tamil.changathi.com/](https://tamil.changathi.com/) not reachable or slow.  
+- **Fix:** Open the URL in a normal browser first. If it’s slow, increase `navigationTimeout` or `actionTimeout` in `playwright.config.js`.
 
-This can happen when Node/Playwright scans `%TEMP%` and hits the restricted `WinSAT` folder.
+### EPERM / “scandir … WinSAT” (Windows)
 
-1. **Always run from the project folder** (not from `C:\Users\NEXA`):
-   ```powershell
-   cd "C:\Users\NEXA\Documents\GitHub\Playwright-Assignment-1-IT23344860"
-   npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js
-   ```
+- **Cause:** Playwright/Node touching a restricted temp folder.  
+- **Fix:** Run from the **project folder**, not from your user folder. If it still happens, use a different temp folder for that session:
 
-2. **If it still happens**, use a different temp folder for that session:
-   ```powershell
-   cd "C:\Users\NEXA\Documents\GitHub\Playwright-Assignment-1-IT23344860"
-   $env:TEMP = "$env:USERPROFILE\playwright-temp"; if (-not (Test-Path $env:TEMP)) { New-Item -ItemType Directory -Path $env:TEMP -Force }; npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js
-   ```
-   Or in CMD:
-   ```cmd
-   cd /d "C:\Users\NEXA\Documents\GitHub\Playwright-Assignment-1-IT23344860"
-   set TEMP=%USERPROFILE%\playwright-temp
-   if not exist "%TEMP%" mkdir "%TEMP%"
-   npx playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js
-   ```
+  **PowerShell:**
+  ```powershell
+  cd "c:\Users\HP\Documents\GitHub\Playwright-Assignment-1-IT23344860"
+  $env:TEMP = "$env:USERPROFILE\playwright-temp"
+  if (-not (Test-Path $env:TEMP)) { New-Item -ItemType Directory -Path $env:TEMP -Force }
+  npm test
+  ```
+
+  **CMD:**
+  ```cmd
+  cd /d "c:\Users\HP\Documents\GitHub\Playwright-Assignment-1-IT23344860"
+  set TEMP=%USERPROFILE%\playwright-temp
+  if not exist "%TEMP%" mkdir "%TEMP%"
+  npm test
+  ```
+
+### NO_COLOR / FORCE_COLOR warning in terminal
+
+- **Cause:** Both `NO_COLOR` and `FORCE_COLOR` are set (e.g. by Cursor).  
+- **Fix:** Harmless. Main npm scripts already use `NODE_OPTIONS=--no-warnings` to hide it. If you use `npx playwright test` directly and see the warning, you can ignore it.
+
+### Some tests fail (e.g. Pos_Fun_012, Pos_Fun_013)
+
+- **Cause:** Site output differs from Excel expected (e.g. place name “jaffna”, numbers “10”).  
+- **Fix:** Either update the expected values in the spec to match current site behavior, or treat as known differences until the site is updated.
+
+---
+
+## Alternative ways to run
+
+| Goal | Command |
+|-----|--------|
+| Only Chromium (faster) | `npm run test:chromium` |
+| Only Firefox | `npm run test:firefox` |
+| Only Microsoft Edge | `npm run test:edge` |
+| Visible Chromium | `npm run test:chromium:headed` |
+| Visible Firefox | `npm run test:firefox:headed` |
+| Visible Edge | `npm run test:edge:headed` |
+| Single test (e.g. Pos_Fun_001) | `npm run test:pos1` |
+| Debug with inspector | `npm run test:debug-pos1` |
+| Interactive UI mode | `npm run test:open-ui` |
+
+---
+
+## Quick reference
+
+```bash
+# Install (once)
+npm install
+npx playwright install chromium
+npx playwright install firefox
+npx playwright install msedge
+
+# Run
+npm test                    # All tests, Chromium + Firefox + Edge
+npm run test:chromium       # Chromium only
+npm run test:firefox        # Firefox only
+npm run test:edge           # Microsoft Edge only
+npm run test:headed         # Visible browser (all three)
+npm run test:edge:headed    # Visible Edge
+npm run test:pos1           # Single test
+```

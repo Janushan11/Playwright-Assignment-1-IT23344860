@@ -1,5 +1,5 @@
 // Neg_Fun_007: Joined words without spaces cause incorrect conversion – S – naanveetukuporen
-// Expected: Correct Tamil with proper word separation. Covers: Word combination, robustness.
+// Expected: Correct tamil sentence with proper word separation (actual: incorrect tamil output). Covers: Word combination, robustness.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');

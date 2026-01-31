@@ -3,12 +3,24 @@
   "version": "1.0.0",
   "description": "Playwright tests for Thanglish-to-Tamil conversion at tamil.changathi.com",
   "scripts": {
-    "test": "playwright test",
-    "test:positive": "playwright test assignment-1/positive-functional",
-    "test:negative": "playwright test assignment-1/negative-functional",
-    "test:ui": "playwright test assignment-1/ui-testcases",
-    "test:headed": "playwright test --headed",
-    "test:pos1": "playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js",
+    "test": "cross-env NODE_OPTIONS=--no-warnings playwright test",
+    "test:positive": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/positive-functional",
+    "test:negative": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/negative-functional",
+    "test:ui": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/ui-testcases",
+    "test:headed": "cross-env NODE_OPTIONS=--no-warnings playwright test --headed",
+    "test:chromium": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=chromium",
+    "test:chromium:headed": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=chromium --headed",
+    "test:firefox": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=firefox",
+    "test:firefox:headed": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=firefox --headed",
+    "test:positive:firefox": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/positive-functional --project=firefox",
+    "test:negative:firefox": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/negative-functional --project=firefox",
+    "test:ui:firefox": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/ui-testcases --project=firefox",
+    "test:edge": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=edge",
+    "test:edge:headed": "cross-env NODE_OPTIONS=--no-warnings playwright test --project=edge --headed",
+    "test:positive:edge": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/positive-functional --project=edge",
+    "test:negative:edge": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/negative-functional --project=edge",
+    "test:ui:edge": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/ui-testcases --project=edge",
+    "test:pos1": "cross-env NODE_OPTIONS=--no-warnings playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js",
     "test:pos1-headed": "playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --headed",
     "test:pos1-debug": "set DEBUG_POS1=1&& playwright test assignment-1/positive-functional/Pos_Fun_001.spec.js --project=chromium --headed",
     "test:pos2": "playwright test assignment-1/positive-functional/Pos_Fun_002.spec.js",
@@ -86,6 +98,8 @@
     "test:open-ui": "playwright test --ui"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0"
+    "@playwright/test": "^1.40.0",
+    "cross-env": "^10.1.0",
+    "xlsx": "^0.18.5"
   }
 }

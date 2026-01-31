@@ -4,8 +4,8 @@
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
-const INPUT_THANGLISH = 'naan than idha senjen';
-const EXPECTED_TAMIL = 'நான் தன இதை செஞ்சேன்';
+const INPUT_THANGLISH = 'naan thaan idha senjen';
+const EXPECTED_TAMIL = 'நான் தான் இதை செஞ்சேன்';
 
 test('Pos_Fun_023 – Convert sentence with pronoun emphasis', async ({ page }) => {
   await page.goto(BASE_URL);

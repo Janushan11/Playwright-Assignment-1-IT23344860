@@ -1,5 +1,5 @@
 // Neg_Fun_008: Sentence with english abbreviation disrupts tamil output – S – avan ID card marandhutan
-// Expected: No Tamil conversion / broken output. Covers: Mixed Tanglish + English, robustness.
+// Expected: broken tamil output. Covers: Mixed Tanglish + English, robustness.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');

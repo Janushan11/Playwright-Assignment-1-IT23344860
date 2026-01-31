@@ -1,5 +1,5 @@
 // Pos_Fun_001: convert daily activity sentence – S – naan innaiku office ponen
-// Expected: நான் இன்னைக்கு ஆபீஸ் போனேன் (I went to office today). Covers: Daily language usage, accuracy.
+// Expected: நான் இன்னைக்கு ஆபீஸ் போனேன். Covers: Daily language usage, accuracy.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');

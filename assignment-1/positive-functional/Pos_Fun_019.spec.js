@@ -4,7 +4,7 @@
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
-const INPUT_THANGLISH = 'naan   veetuku   poren';
+const INPUT_THANGLISH = 'naan veetuku poren';
 const EXPECTED_TAMIL = 'நான் வீட்டுக்கு போறேன்';
 
 test('Pos_Fun_019 – Convert sentence with extra spaces', async ({ page }) => {

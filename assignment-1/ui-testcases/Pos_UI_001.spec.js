@@ -1,5 +1,5 @@
 // Pos_UI_001: Output clears immediately when input field is cleared
-// Input: nan veetuku poren, then clear the entire input field. Expected: empty output. Covers: Clear handling, UI.
+// Input: nan veetuku poren, then clear the entire input field. Expected: empty output. Covers: Clear handling, UI. (Excel: emptyoutput)
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, getEditorLocator, typeThanglishAndConvert, getOutputText } = require('../fixtures');

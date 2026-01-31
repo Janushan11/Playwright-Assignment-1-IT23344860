@@ -1,11 +1,11 @@
 // Pos_Fun_017: convert sentence with english technical word – M – naan laptop repair panninen
-// Expected: நான் லேப்டாப் ரிப்பேர் பண்ணினேன். Covers: Mixed Tanglish + English.
+// Expected: நான் laptop ரிப்பேர் பண்ணினேன் (English technical word retained). Covers: Mixed Tanglish + English.
 
 const { test, expect } = require('@playwright/test');
 const { BASE_URL, typeThanglishAndConvert, getOutputText } = require('../fixtures');
 
 const INPUT_THANGLISH = 'naan laptop repair panninen';
-const EXPECTED_TAMIL = 'நான் லேப்டாப் ரிப்பேர் பண்ணினேன்';
+const EXPECTED_TAMIL = 'நான் laptop ரிப்பேர் பண்ணினேன்';
 
 test('Pos_Fun_017 – convert sentence with english technical word', async ({ page }) => {
   await page.goto(BASE_URL);

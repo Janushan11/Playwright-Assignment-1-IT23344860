@@ -1,4 +1,4 @@
-// Neg_Fun_010: Incorrect tense indicator / clear input – type future tense then clear entire field
+// Neg_Fun_010: Incorrect tense indicator causes wrong tamil conversion – type future tense then clear entire field
 // Expected: After clear, output is empty (no stale Tamil). Covers: Tense variation, robustness.
 
 const { test, expect } = require('@playwright/test');
